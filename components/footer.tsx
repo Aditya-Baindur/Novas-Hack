@@ -74,9 +74,8 @@ const Footer = () => {
                   Novas Group
                 </Link>
               </div>
-              <ThemeSwitch />
             </div>
-          </div>
+          </div>2
         </div>
       </div>
     </footer>

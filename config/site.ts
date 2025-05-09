@@ -1,37 +1,17 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next.js + HeroUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "Novax",
+  description: "The Simmulation for the NOVAS group",
   navItems: [
     {
       label: "Home",
-      href: "/",
-    },
-    {
-      label: "Docs",
-      href: "/docs",
-    },
-    {
-      label: "Pricing",
-      href: "/pricing",
-    },
-    {
-      label: "Blog",
-      href: "/blog",
-    },
-    {
-      label: "About",
-      href: "/about",
-    },
-
-    
-
-    {
-      label: "Main",
       href: "/main",
     },
-
+    {
+      label: "Session",
+      href: "/session",
+    },
 
 
   ],
@@ -67,10 +47,6 @@ export const siteConfig = {
     {
       label: "Logout",
       href: "/logout",
-    },
-        {
-      label: "Main",
-      href: "/main",
     },
 
   ],
