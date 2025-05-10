@@ -1,221 +1,209 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import fs from 'fs/promises';
+import path from 'path';
 
-type Session = {
-  id: number;
-  title: string;
-  description: string;
-  imageUrl: string;
-};
-
-export default function Session() {
+export default function ChoicePage() {
   const router = useRouter();
-  const [sessions, setSessions] = useState<Session[]>([]);
-  const [selectedSession, setSelectedSession] = useState<number | null>(null);
-  const [newSessionTitle, setNewSessionTitle] = useState<string>("");
-  const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const searchParams = useSearchParams();
+  const sessionId = searchParams ? searchParams.get("sessionId") : null;
+  const [loading, setLoading] = useState(false);
+  const [sessionData, setSessionData] = useState(null);
+  const [inputName, setInputName] = useState("");
+  const [inputBio, setInputBio] = useState("");
+  const [imageURL, setImageURL] = useState("");
 
+  // Load existing session data if available
   useEffect(() => {
-    const initialSessions: Omit<Session, "imageUrl">[] = [
-      {
-        id: 1,
-        title: "Example",
-        description: "Available soon.",
-      },
-    ];
-
-    const fetchAllImages = async () => {
+    const loadSessionData = async () => {
+      if (!sessionId) {
+        console.error("No session ID provided");
+        return;
+      }
+      
       try {
-        const sessionsWithImages: Session[] = await Promise.all(
-          initialSessions.map(async (session) => {
-            const imageUrl = await fetchUnsplashImage(session.title);
-            return { ...session, imageUrl };
-          })
-        );
-        setSessions(sessionsWithImages);
+        // Using fetch to get the JSON file
+        const response = await fetch('/api/session?sessionId=' + sessionId);
+        if (response.ok) {
+          const data = await response.json();
+          setSessionData(data);
+          // Pre-fill form fields if data exists
+          if (data.sessionName) setInputName(data.sessionName);
+          if (data.sessionBio) setInputBio(data.sessionBio);
+          if (data.imageURL) setImageURL(data.imageURL);
+        }
       } catch (error) {
-        console.error("Failed to fetch images:", error);
-        setSessions(
-          initialSessions.map((session) => ({
-            ...session,
-            imageUrl: "/api/placeholder/400/300",
-          }))
-        );
-      } finally {
-        setIsLoading(false);
+        console.error("Error loading session data:", error);
       }
     };
 
-    fetchAllImages();
-  }, []);
+    loadSessionData();
+  }, [sessionId]);
 
-  const fetchUnsplashImage = async (query: string): Promise<string> => {
+  const saveSessionData = async () => {
+    if (!sessionId) return;
+    
+    setLoading(true);
+    
     try {
-      const response = await fetch(`/api/unsplash?query=${encodeURIComponent(query)}`);
+      const data = {
+        sessionID: sessionId,
+        sessionName: inputName || "Unnamed Session",
+        sessionBio: inputBio || "No description provided",
+        imageURL: imageURL || ""
+      };
+      
+      // Send data to API route that will save it to the JSON file
+      const response = await fetch('/api/save-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      
       if (!response.ok) {
-        throw new Error(`Unsplash API error: ${response.statusText}`);
+        throw new Error('Failed to save session data');
       }
-      const data = await response.json();
-      return data.imageUrl || `/api/placeholder/400/300?${query}`;
+      
+      return data;
     } catch (error) {
-      console.error("Error fetching Unsplash image:", error);
-      return `/api/placeholder/400/300?${query}`;
-    }
-  };
-
-  const handleCardClick = (id: number) => {
-    setSelectedSession(id === selectedSession ? null : id);
-  };
-
-  const navigateToChoicePage = (sessionId: number) => {
-    router.push(`/choice?sessionId=${sessionId}`);
-  };
-
-  const addNewSession = async () => {
-    if (newSessionTitle.trim() === "") return;
-
-    setIsLoading(true);
-
-    try {
-      const imageUrl = await fetchUnsplashImage(newSessionTitle);
-      const newSession: Session = {
-        id: Date.now(),
-        title: newSessionTitle,
-        description: "New session created.",
-        imageUrl,
-      };
-      setSessions([...sessions, newSession]);
-    } catch (error) {
-      console.error("Failed to create new session:", error);
-      const fallbackSession: Session = {
-        id: Date.now(),
-        title: newSessionTitle,
-        description: "New session created.",
-        imageUrl: `/api/placeholder/400/300?${newSessionTitle}`,
-      };
-      setSessions([...sessions, fallbackSession]);
+      console.error("Error saving session data:", error);
+      alert("Failed to save session data");
     } finally {
-      setNewSessionTitle("");
-      setIsFormOpen(false);
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
+  const handleAgentChoiceSelection = async () => {
+    const savedData = await saveSessionData();
+    if (savedData) {
+      router.push(`/agent?sessionId=${sessionId}`);
+    }
+  };
+
+  const handleEnvChoiceSelection = async () => {
+    const savedData = await saveSessionData();
+    if (savedData) {
+      router.push(`/environment?sessionId=${sessionId}`);
+    }
+  };
+
+  // Return loading screen or error message if no sessionId is available
+  if (!sessionId) {
+    return (
+      <div className="p-6 min-h-[calc(100vh-7rem)]">
+        <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+          <p className="text-yellow-700">
+            No session ID provided. Please go back and select a valid session.
+          </p>
+          <button
+            onClick={() => router.back()}
+            className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition"
+          >
+            Back to Sessions
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Main content when sessionId is present
   return (
-    <div className="p-4 min-h-[calc(100vh-7rem)]">
-      <div className="flex justify-between mb-6 ">
-        <h1 className="text-2xl font-bold">Create a new session</h1>
-        <button
-          onClick={() => setIsFormOpen(true)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-          disabled={isLoading}
-        >
-          New Session
-        </button>
+    <div className="p-6 min-h-[calc(100vh-7rem)]">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold">Session #{sessionId} Configuration</h1>
+        <p className="text-gray-600 mt-2">
+          Please provide details for this session before making a choice.
+        </p>
       </div>
 
-      {isFormOpen && (
-        <div className="mb-6 p-4 bg-gray-100 rounded-lg">
-          <h2 className="text-lg font-semibold mb-2">Create New Session</h2>
-          <div className="flex gap-2">
+      <div className="bg-white shadow-lg rounded-lg p-6 mb-6">
+        <h2 className="text-xl font-semibold mb-3">Session Details</h2>
+        <div className="space-y-4">
+          <div>
+            <label htmlFor="sessionName" className="block text-sm font-medium text-gray-700">
+              Session Name
+            </label>
             <input
               type="text"
-              value={newSessionTitle}
-              onChange={(e) => setNewSessionTitle(e.target.value)}
-              placeholder="Session Title"
-              className="flex-grow px-3 py-2 border border-gray-300 rounded-lg"
+              id="sessionName"
+              value={inputName}
+              onChange={(e) => setInputName(e.target.value)}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Enter session name"
             />
-            <button
-              onClick={addNewSession}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
-              disabled={isLoading}
-            >
-              {isLoading ? "Creating..." : "Create"}
-            </button>
-            <button
-              onClick={() => setIsFormOpen(false)}
-              className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
-              disabled={isLoading}
-            >
-              Cancel
-            </button>
+          </div>
+          <div>
+            <label htmlFor="sessionBio" className="block text-sm font-medium text-gray-700">
+              Session Description
+            </label>
+            <textarea
+              id="sessionBio"
+              value={inputBio}
+              onChange={(e) => setInputBio(e.target.value)}
+              rows={3}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Describe this session"
+            />
+          </div>
+          <div>
+            <label htmlFor="imageURL" className="block text-sm font-medium text-gray-700">
+              Image URL (optional)
+            </label>
+            <input
+              type="text"
+              id="imageURL"
+              value={imageURL}
+              onChange={(e) => setImageURL(e.target.value)}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              placeholder="https://example.com/image.jpg"
+            />
           </div>
         </div>
-      )}
-
-      {isLoading && sessions.length === 0 && (
-        <div className="flex justify-center items-center h-64">
-          <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500 mb-2"></div>
-            <p>Loading sessions...</p>
-          </div>
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {sessions.map((session) => (
-          <div
-            key={session.id}
-            className={`relative rounded-lg overflow-hidden shadow-lg cursor-pointer transition-all duration-300 transform ${
-              selectedSession === session.id
-                ? "scale-105 ring-2 ring-blue-500"
-                : "hover:scale-102"
-            }`}
-            onClick={() => handleCardClick(session.id)}
-          >
-            <div className="relative h-48">
-              <img
-                src={session.imageUrl}
-                alt={session.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-x-0 bottom-0 px-4 py-2 bg-black/40 backdrop-blur-sm border border-white/20">
-                <div className="flex justify-between items-center">
-                  <p className="text-white text-sm">{session.description}</p>
-                  <button
-                    className="px-3 py-1 text-xs text-white bg-black/30 rounded-lg hover:bg-black/50"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      alert(`You'll be notified about "${session.title}"`);
-                    }}
-                  >
-                    Notify me
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="p-4 bg-white">
-              <h3 className="font-semibold text-lg">{session.title}</h3>
-              {selectedSession === session.id && (
-                <div className="mt-4 flex justify-between">
-                  <p className="text-sm text-gray-600">
-                    Click the button to proceed to choices for this session.
-                  </p>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigateToChoicePage(session.id);
-                    }}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-                  >
-                    Go to Choices
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
       </div>
 
-      {selectedSession && (
-        <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-          <p className="text-center text-blue-800">
-            Session #{selectedSession} is selected. Click again to deselect.
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+        <div
+          className="bg-white shadow-lg rounded-lg p-6 cursor-pointer hover:shadow-xl transition-shadow"
+          onClick={handleAgentChoiceSelection}
+        >
+          <h2 className="text-xl font-semibold mb-3">Agent</h2>
+          <p className="text-gray-600 mb-4">
+            This is the first choice option for session #{sessionId}. Select this to proceed with option 1.
           </p>
+          <button
+            className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            disabled={loading}
+          >
+            {loading ? "Saving..." : "Select Agent"}
+          </button>
         </div>
-      )}
+        <div
+          className="bg-white shadow-lg rounded-lg p-6 cursor-pointer hover:shadow-xl transition-shadow"
+          onClick={handleEnvChoiceSelection}
+        >
+          <h2 className="text-xl font-semibold mb-3">Environment</h2>
+          <p className="text-gray-600 mb-4">
+            This is the second choice option for session #{sessionId}. Select this to proceed with option 2.
+          </p>
+          <button
+            className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            disabled={loading}
+          >
+            {loading ? "Saving..." : "Select Environment"}
+          </button>
+        </div>
+      </div>
+      <div className="mt-8">
+        <button
+          onClick={() => router.back()}
+          className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition"
+        >
+          Back to Sessions
+        </button>
+      </div>
     </div>
   );
 }
