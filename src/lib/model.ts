@@ -18,22 +18,28 @@ const euclidean_metric = (a: number[], b: number[]) => {
   const distance = Math.sqrt(
     a.reduce((sum, ai, i) => sum + Math.pow(b[i] - ai, 2), 0)
   );
-  // Compute maximum possible distance (e.g., magnitude of vectors)
-  const maxDistance =
-    Math.sqrt(
-      Math.max(
-        a.reduce((sum, x) => sum + x * x, 0),
-        b.reduce((sum, x) => sum + x * x, 0)
-      )
-    ) || 1; // Avoid division by zero
 
-  return distance / maxDistance;
+  return distance;
 };
 
 const manhattan_metric = (a: number[], b: number[]) =>
   sum(zip(a, b).map(([a, b]) => Math.abs(b - a)));
 
-const metric = euclidean_metric;
+// sigmoid func
+const sigmoid = (x: number) => 1 / (1 + Math.exp(-x));
+
+const metric = (a: number[], b: number[]) => {
+  const newA = [...a];
+  const newB = [...b];
+
+  newB[0] = b[0] / 100;
+  newB[1] = b[1] / 100;
+
+  newA[2] = sigmoid(newA[2] / 65_000) * 2 - 1;
+  newB[2] = sigmoid(newB[2] / 65_000) * 2 - 1;
+
+  return euclidean_metric(newA, newB);
+};
 
 function augment_data(
   cluster: number[][],
@@ -69,7 +75,6 @@ export function get_profiles(
 }
 
 export function run_simulation(environment: number[], profiles: number[][]) {
-  console.log(profiles);
   if (!profiles || profiles.length == 0 || profiles[0].length !== 3) {
     console.error("Invalid profiles dimensions", profiles);
 

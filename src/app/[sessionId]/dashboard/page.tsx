@@ -85,17 +85,13 @@ export default function SessionDashboard() {
 
       setProfiles(newProfiles);
 
-      console.log(environment, newProfiles);
-
       const decision_vec = run_simulation(environment, newProfiles);
-      console.log("decision", decision_vec);
       const conf =
         decision_vec.reduce(
           (accumulator, currentValue) => accumulator + currentValue,
           0
         ) / decision_vec.length;
 
-      console.log("newDecision", conf);
       setDecision({
         result: conf >= 0.5 ? "Buy" : "Not buy",
         confidence: conf,
@@ -114,14 +110,12 @@ export default function SessionDashboard() {
     if (!profiles) return;
 
     const decision_vec = run_simulation(environment, profiles);
-    console.log("decision", decision_vec);
     const conf =
       decision_vec.reduce(
         (accumulator, currentValue) => accumulator + currentValue,
         0
       ) / decision_vec.length;
 
-    console.log("newDecision", conf);
     setDecision({ result: conf >= 0.5 ? "Buy" : "Not buy", confidence: conf });
   };
 
