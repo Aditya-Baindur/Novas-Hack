@@ -28,9 +28,9 @@ export function DecisionResult({ decision }: DecisionResultProps) {
     );
   }
 
-  const { result, confidence, reasoning } = decision;
+  const { result, confidence } = decision;
   const confidencePercent = Math.round(confidence * 100);
-  const isPurchase = result === "BOUGHT";
+  const isPurchase = confidence >= 0.5;
 
   return (
     <Card>
@@ -47,7 +47,7 @@ export function DecisionResult({ decision }: DecisionResultProps) {
                   isPurchase ? "text-green-600" : "text-red-600"
                 }`}
               >
-                {isPurchase ? "Will Purchase" : "Won't Purchase"}
+                {result}
               </p>
             </div>
             <div
@@ -57,9 +57,7 @@ export function DecisionResult({ decision }: DecisionResultProps) {
                   : "bg-red-100 text-red-600"
               }`}
             >
-              <span className="text-2xl">
-                {isPurchase ? "✓" : "✗"}
-              </span>
+              <span className="text-2xl">{isPurchase ? "✓" : "✗"}</span>
             </div>
           </div>
 
@@ -82,10 +80,10 @@ export function DecisionResult({ decision }: DecisionResultProps) {
 
           <div>
             <h4 className="text-sm font-medium mb-1">Reasoning</h4>
-            <p className="text-sm text-muted-foreground">{reasoning}</p>
+            <p className="text-sm text-muted-foreground"></p>
           </div>
         </div>
       </CardContent>
     </Card>
   );
-} 
+}

@@ -1,27 +1,40 @@
-import { useState } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import { Badge } from "./ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { sampleEvents, Event } from "../lib/mock-data";
+import { Input } from "./ui/input";
 
 interface EventSelectorProps {
-  onEventsChange: (events: Event[]) => void;
+  onEventsChange: (events: {
+    originalPrice: number;
+    priceChange: number;
+  }) => void;
 }
 
 export function EventSelector({ onEventsChange }: EventSelectorProps) {
-  const [selectedEvents, setSelectedEvents] = useState<Event[]>([]);
+  const [selectedEvents, setSelectedEvents] = useState<Event[]>([
+    sampleEvents[0],
+  ]);
+  const [originalPrice, setOriginalPrice] = useState<number>(100);
+  const [priceChange, setPriceChange] = useState<number>(0);
+
+  useEffect(() => {
+    onEventsChange({ originalPrice, priceChange });
+  }, [originalPrice, priceChange]);
 
   const toggleEvent = (event: Event) => {
     const isSelected = selectedEvents.some((e) => e.id === event.id);
     let updatedEvents: Event[];
-    
+
     if (isSelected) {
       updatedEvents = selectedEvents.filter((e) => e.id !== event.id);
     } else {
       updatedEvents = [...selectedEvents, event];
     }
-    
+
     setSelectedEvents(updatedEvents);
-    onEventsChange(updatedEvents);
   };
 
   const isSelected = (event: Event) => {
@@ -66,6 +79,19 @@ export function EventSelector({ onEventsChange }: EventSelectorProps) {
                     </li>
                   ))}
                 </ul>
+
+                <Input
+                  type="number"
+                  placeholder="Original price"
+                  value={originalPrice}
+                  onChange={(e) => setOriginalPrice(e.target.value)}
+                />
+                <Input
+                  type="number"
+                  placeholder="change"
+                  value={priceChange}
+                  onChange={(e) => setPriceChange(e.target.value)}
+                />
               </div>
             ) : (
               <p className="text-sm text-muted-foreground italic">
@@ -77,4 +103,4 @@ export function EventSelector({ onEventsChange }: EventSelectorProps) {
       </CardContent>
     </Card>
   );
-} 
+}

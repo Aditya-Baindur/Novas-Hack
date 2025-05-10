@@ -9,14 +9,13 @@ interface VectorInputsProps {
 
 export function VectorInputs({ onVectorChange }: VectorInputsProps) {
   const [vector, setVector] = useState<CustomerVector>({
-    loyalty: 0.5,
-    riskTolerance: 0.5,
-    innovation: 0.5,
-    priceSensitivity: 0.5,
+    riskSeeking: 0.5,
+    marketSucc: 0.5,
+    income: 60000,
   });
 
   const handleVectorChange = (key: keyof CustomerVector, value: number) => {
-    const newVector = { ...vector, [key]: value / 100 };
+    const newVector = { ...vector, [key]: value };
     setVector(newVector);
     onVectorChange(newVector);
   };
@@ -30,10 +29,10 @@ export function VectorInputs({ onVectorChange }: VectorInputsProps) {
         <div className="space-y-2">
           <div className="flex justify-between">
             <label className="text-sm font-medium" htmlFor="loyalty">
-              Brand Loyalty
+              Risk Seeking
             </label>
             <span className="text-sm text-muted-foreground">
-              {Math.round(vector.loyalty * 100)}%
+              {Math.round(vector.riskSeeking * 100)}%
             </span>
           </div>
           <Slider
@@ -41,8 +40,10 @@ export function VectorInputs({ onVectorChange }: VectorInputsProps) {
             min={0}
             max={100}
             step={1}
-            value={[vector.loyalty * 100]}
-            onValueChange={(value: number[]) => handleVectorChange("loyalty", value[0])}
+            value={[vector.riskSeeking * 100]}
+            onValueChange={(value: number[]) =>
+              handleVectorChange("riskSeeking", value[0] / 100)
+            }
           />
           <p className="text-xs text-muted-foreground">
             How loyal the customer is to specific brands
@@ -52,10 +53,10 @@ export function VectorInputs({ onVectorChange }: VectorInputsProps) {
         <div className="space-y-2">
           <div className="flex justify-between">
             <label className="text-sm font-medium" htmlFor="riskTolerance">
-              Risk Tolerance
+              Mark Susceptibility
             </label>
             <span className="text-sm text-muted-foreground">
-              {Math.round(vector.riskTolerance * 100)}%
+              {Math.round(vector.marketSucc * 100)}%
             </span>
           </div>
           <Slider
@@ -63,8 +64,10 @@ export function VectorInputs({ onVectorChange }: VectorInputsProps) {
             min={0}
             max={100}
             step={1}
-            value={[vector.riskTolerance * 100]}
-            onValueChange={(value: number[]) => handleVectorChange("riskTolerance", value[0])}
+            value={[vector.marketSucc * 100]}
+            onValueChange={(value: number[]) =>
+              handleVectorChange("marketSucc", value[0] / 100)
+            }
           />
           <p className="text-xs text-muted-foreground">
             How willing the customer is to take risks with purchases
@@ -74,47 +77,27 @@ export function VectorInputs({ onVectorChange }: VectorInputsProps) {
         <div className="space-y-2">
           <div className="flex justify-between">
             <label className="text-sm font-medium" htmlFor="innovation">
-              Innovation Adoption
+              Income
             </label>
             <span className="text-sm text-muted-foreground">
-              {Math.round(vector.innovation * 100)}%
+              {vector.income}
             </span>
           </div>
           <Slider
             id="innovation"
             min={0}
-            max={100}
-            step={1}
-            value={[vector.innovation * 100]}
-            onValueChange={(value: number[]) => handleVectorChange("innovation", value[0])}
+            step={10000}
+            max={500000}
+            value={[vector.income]}
+            onValueChange={(value: number[]) =>
+              handleVectorChange("income", value[0])
+            }
           />
           <p className="text-xs text-muted-foreground">
             How quickly the customer adopts new technology or products
           </p>
         </div>
-
-        <div className="space-y-2">
-          <div className="flex justify-between">
-            <label className="text-sm font-medium" htmlFor="priceSensitivity">
-              Price Sensitivity
-            </label>
-            <span className="text-sm text-muted-foreground">
-              {Math.round(vector.priceSensitivity * 100)}%
-            </span>
-          </div>
-          <Slider
-            id="priceSensitivity"
-            min={0}
-            max={100}
-            step={1}
-            value={[vector.priceSensitivity * 100]}
-            onValueChange={(value: number[]) => handleVectorChange("priceSensitivity", value[0])}
-          />
-          <p className="text-xs text-muted-foreground">
-            How concerned the customer is with price versus value
-          </p>
-        </div>
       </CardContent>
     </Card>
   );
-} 
+}
