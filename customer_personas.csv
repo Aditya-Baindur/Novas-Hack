@@ -1,0 +1,221 @@
+Name,RiskTolerance,Price,Loyalty,InnovationTolerance
+Tech Startup Founders,0.85,0.55,0.4,0.95
+Digital Nomads,0.8,0.6,0.3,0.9
+Gen Z Influencers,0.75,0.65,0.25,0.85
+Venture Capitalists,0.9,0.3,0.45,0.8
+Blockchain Enthusiasts,0.95,0.5,0.35,0.9
+Mid-size Tech Companies,0.6,0.65,0.7,0.75
+Healthcare Providers,0.4,0.75,0.8,0.5
+Retail Chain Managers,0.5,0.85,0.65,0.55
+E-commerce Platforms,0.65,0.7,0.6,0.7
+SaaS Business Owners,0.7,0.6,0.65,0.75
+Banking Executives,0.3,0.4,0.85,0.45
+Government Agencies,0.15,0.9,0.9,0.25
+Insurance Companies,0.25,0.7,0.85,0.35
+Legal Firms,0.35,0.35,0.9,0.3
+Manufacturing Conglomerates,0.3,0.8,0.75,0.4
+Management Consultants,0.6,0.45,0.65,0.7
+Marketing Agencies,0.65,0.6,0.55,0.75
+Freelance Developers,0.7,0.75,0.4,0.65
+Educational Institutions,0.35,0.85,0.8,0.5
+IT Service Providers,0.55,0.7,0.6,0.65
+Luxury Consumers,0.6,0.3,0.7,0.65
+Budget-Conscious Families,0.25,0.95,0.65,0.3
+Millennials,0.65,0.75,0.4,0.75
+Retirees,0.2,0.85,0.85,0.25
+Small Business Owners,0.55,0.8,0.7,0.45
+Biotech Researchers,0.75,0.4,0.55,0.9
+Cybersecurity Specialists,0.45,0.55,0.75,0.65
+Environmental Activists,0.65,0.8,0.6,0.7
+Urban Designers,0.55,0.5,0.65,0.8
+Rural Farmers,0.2,0.95,0.9,0.15
+Aerospace Engineers,0.6,0.35,0.8,0.75
+Art Gallery Owners,0.7,0.25,0.5,0.6
+Sports Team Managers,0.5,0.65,0.75,0.4
+Food Delivery Services,0.6,0.85,0.3,0.5
+Healthcare Startups,0.8,0.45,0.5,0.85
+Fashion Influencers,0.7,0.35,0.25,0.75
+Logistics Companies,0.4,0.85,0.7,0.45
+Ride-sharing Drivers,0.55,0.9,0.2,0.45
+Restaurant Franchise Owners,0.4,0.7,0.75,0.35
+Social Impact Investors,0.75,0.55,0.7,0.8
+Podcast Creators,0.65,0.65,0.35,0.7
+Real Estate Developers,0.6,0.4,0.6,0.5
+Telehealth Providers,0.65,0.5,0.55,0.8
+Traditional Craftspeople,0.15,0.7,0.95,0.2
+Construction Firms,0.35,0.75,0.8,0.3
+Fitness Trainers,0.55,0.6,0.5,0.65
+Remote Work Advocates,0.7,0.55,0.45,0.8
+Virtual Reality Developers,0.85,0.4,0.3,0.95
+Community Credit Unions,0.25,0.8,0.9,0.35
+Sustainable Fashion Brands,0.6,0.7,0.55,0.75
+Indie Game Developers,0.8,0.7,0.35,0.85
+Music Festival Organizers,0.75,0.65,0.3,0.7
+Organic Farmers,0.45,0.75,0.85,0.55
+Space Tourism Startups,0.95,0.2,0.25,0.95
+Boutique Hotel Owners,0.5,0.4,0.8,0.6
+Quantum Computing Researchers,0.9,0.35,0.5,0.95
+Artisanal Food Producers,0.4,0.55,0.8,0.5
+Corporate Sustainability Officers,0.55,0.6,0.7,0.75
+Drone Racing Leagues,0.85,0.6,0.3,0.9
+Telemedicine Patients,0.5,0.9,0.4,0.6
+Online Education Platforms,0.7,0.8,0.5,0.75
+Neighborhood Bookstores,0.3,0.65,0.9,0.35
+Crowdfunding Campaign Creators,0.75,0.7,0.4,0.7
+Heritage Conservation Groups,0.2,0.6,0.95,0.3
+IoT Device Manufacturers,0.75,0.55,0.45,0.85
+Freelance Content Creators,0.65,0.8,0.3,0.7
+Personal Finance Coaches,0.5,0.75,0.65,0.5
+Micro-Mobility Startups,0.85,0.65,0.25,0.9
+Plant-Based Food Companies,0.7,0.6,0.5,0.8
+Elderly Care Services,0.25,0.7,0.9,0.4
+Remote Learning Students,0.55,0.95,0.35,0.65
+AI Ethics Committees,0.4,0.3,0.75,0.65
+Local Craft Breweries,0.55,0.45,0.7,0.6
+Regenerative Agriculture Advocates,0.6,0.65,0.75,0.7
+Automotive Manufacturing Industry,0.45,0.7,0.75,0.65
+Semiconductor Industry,0.6,0.5,0.6,0.9
+Commercial Airlines Industry,0.3,0.85,0.65,0.5
+Pharmaceutical Industry,0.4,0.45,0.75,0.7
+Renewable Energy Sector,0.65,0.6,0.55,0.85
+Traditional Banking Sector,0.2,0.6,0.9,0.35
+Fast Fashion Industry,0.5,0.9,0.3,0.55
+Enterprise Software Industry,0.55,0.4,0.8,0.75
+Oil & Gas Industry,0.25,0.7,0.65,0.4
+Luxury Hospitality Industry,0.4,0.25,0.85,0.6
+Telecommunications Sector,0.35,0.75,0.7,0.6
+Defense Contractors,0.3,0.3,0.9,0.5
+Agricultural Machinery Industry,0.35,0.8,0.85,0.45
+Mobile Gaming Industry,0.75,0.85,0.25,0.8
+Medical Device Manufacturers,0.5,0.35,0.8,0.75
+Food Processing Industry,0.3,0.85,0.7,0.4
+Cloud Infrastructure Providers,0.65,0.5,0.75,0.85
+Private Education Industry,0.4,0.4,0.85,0.5
+Green Construction Industry,0.6,0.65,0.6,0.75
+Fast Food Chain Industry,0.35,0.95,0.4,0.45
+Streaming Entertainment Platforms,0.7,0.75,0.5,0.8
+Commercial Real Estate Industry,0.35,0.45,0.8,0.4
+Data Analytics Providers,0.7,0.55,0.65,0.85
+Consumer Electronics Industry,0.6,0.7,0.5,0.8
+Shipping & Logistics Industry,0.35,0.8,0.75,0.5
+Pre-Seed Tech Startups,0.95,0.9,0.2,0.95
+Series B SaaS Companies,0.75,0.65,0.5,0.85
+Early-Stage Biotech Firms,0.9,0.55,0.4,0.9
+Enterprise-Level Financial Institutions,0.2,0.4,0.9,0.4
+Mid-Size Manufacturing Companies,0.45,0.75,0.8,0.55
+Fortune 100 Technology Corporations,0.5,0.35,0.75,0.8
+Bootstrapped E-commerce Businesses,0.6,0.85,0.65,0.7
+Growth-Stage Healthcare Companies,0.65,0.5,0.7,0.75
+Late-Stage Unicorn Startups,0.8,0.45,0.55,0.9
+Public Sector Organizations,0.15,0.95,0.85,0.3
+Venture-Backed Fintech Startups,0.85,0.5,0.3,0.9
+Established Retail Chains,0.35,0.8,0.7,0.5
+Mature Professional Service Firms,0.3,0.4,0.9,0.45
+Global Enterprise Software Companies,0.55,0.5,0.8,0.75
+Seed-Stage Clean Energy Startups,0.9,0.7,0.4,0.9
+Mid-Market B2B Service Providers,0.5,0.65,0.75,0.6
+Angel-Funded Consumer Apps,0.85,0.8,0.25,0.85
+Micro-Enterprises (1-9 employees),0.45,0.95,0.85,0.5
+Small-to-Medium Enterprises (10-249),0.55,0.75,0.8,0.6
+Scale-Up Technology Companies,0.8,0.6,0.5,0.85
+Legacy Industrial Conglomerates,0.2,0.7,0.85,0.35
+Pre-IPO Technology Platforms,0.7,0.4,0.6,0.8
+Established Academic Institutions,0.25,0.75,0.9,0.5
+Newly-Public Companies,0.6,0.55,0.65,0.7
+Niche Market Specialists,0.55,0.4,0.85,0.65
+Direct-to-Consumer Brands,0.65,0.75,0.45,0.7
+Franchise Business Models,0.3,0.65,0.85,0.4
+Non-Profit Organizations,0.35,0.9,0.9,0.55
+Subscription-Based Services,0.6,0.7,0.75,0.65
+Hardware Manufacturers,0.45,0.65,0.7,0.6
+Digital Media Agencies,0.75,0.6,0.4,0.8
+Big Data Organizations,0.65,0.45,0.6,0.9
+Hospitality Management Groups,0.4,0.75,0.8,0.5
+On-Demand Service Platforms,0.7,0.8,0.35,0.75
+Corporate Training Providers,0.5,0.55,0.75,0.6
+Research & Development Labs,0.85,0.3,0.65,0.95
+Wholesale Distribution Companies,0.3,0.9,0.75,0.4
+Boutique Consulting Firms,0.65,0.35,0.8,0.7
+Supply Chain Optimization Services,0.5,0.7,0.65,0.75
+Specialty Retail Stores,0.45,0.6,0.85,0.5
+Business Process Outsourcing,0.4,0.85,0.7,0.55
+Vertical SaaS Providers,0.7,0.5,0.8,0.8
+Creative Design Studios,0.8,0.45,0.5,0.85
+Managed Service Providers,0.4,0.6,0.9,0.6
+Last-Mile Delivery Services,0.55,0.85,0.4,0.65
+Industry Consortium Organizations,0.25,0.5,0.95,0.45
+White-Label Product Developers,0.6,0.8,0.7,0.55
+Omnichannel Retailers,0.5,0.7,0.65,0.7
+Infrastructure Service Companies,0.35,0.75,0.8,0.5
+Circular Economy Businesses,0.7,0.6,0.65,0.8
+Augmented Reality Solution Providers,0.85,0.45,0.4,0.9
+Professional Association Management,0.2,0.65,0.95,0.4
+Robotics Automation Companies,0.75,0.4,0.55,0.9
+Alternative Protein Producers,0.8,0.7,0.45,0.85
+API-First Business Models,0.75,0.5,0.6,0.85
+Decentralized Autonomous Organizations,0.95,0.4,0.3,0.95
+Gig Economy Platforms,0.65,0.85,0.25,0.7
+Carbon Capture Technology Firms,0.8,0.35,0.6,0.9
+Precision Agriculture Providers,0.65,0.7,0.75,0.8
+Remote Team Management Software,0.7,0.6,0.55,0.8
+Human Resources Technology Companies,0.55,0.65,0.75,0.7
+Dark Kitchen Food Businesses,0.65,0.8,0.4,0.7
+Custom Manufacturing Services,0.5,0.45,0.85,0.6
+Value-Added Resellers,0.4,0.75,0.8,0.5
+Regulatory Compliance Services,0.3,0.55,0.9,0.45
+EdTech Hardware Manufacturers,0.6,0.75,0.65,0.75
+Sustainable Packaging Innovators,0.7,0.65,0.6,0.85
+Mental Health Technology Platforms,0.65,0.55,0.7,0.8
+Low-Code Development Platforms,0.6,0.5,0.75,0.85
+Metaverse Development Studios,0.9,0.4,0.35,0.95
+Offline Experience Businesses,0.4,0.55,0.9,0.5
+Drone-Based Service Companies,0.8,0.5,0.4,0.85
+Workplace Culture Consultancies,0.55,0.4,0.85,0.65
+Quantum Security Providers,0.85,0.35,0.65,0.95
+Peer-to-Peer Lending Platforms,0.75,0.8,0.4,0.8
+Zero-Waste Retail Businesses,0.6,0.7,0.75,0.7
+Voice Technology Developers,0.8,0.55,0.5,0.9
+Industrial IoT Solution Providers,0.7,0.45,0.7,0.85
+Genetic Testing Services,0.65,0.5,0.6,0.8
+Brick-and-Mortar Small Retailers,0.35,0.75,0.9,0.4
+Premium Newsletter Publishers,0.6,0.4,0.85,0.65
+Corporate Innovation Labs,0.9,0.3,0.6,0.95
+Vertical Farming Companies,0.75,0.65,0.5,0.85
+Synthetic Biology Startups,0.9,0.45,0.35,0.95
+Urban Mobility Infrastructure Providers,0.65,0.6,0.75,0.8
+Autonomous Vehicle Developers,0.85,0.3,0.45,0.95
+Ethical AI Consultancies,0.7,0.45,0.8,0.85
+Private Space Industry Contractors,0.8,0.25,0.7,0.9
+Microfinance Institutions,0.5,0.85,0.85,0.55
+Digital Twin Technology Providers,0.75,0.4,0.65,0.9
+Physical Therapy Clinics,0.3,0.6,0.95,0.45
+Heritage Preservation Architects,0.25,0.35,0.95,0.4
+Wearable Health Device Manufacturers,0.7,0.55,0.6,0.85
+Circular Fashion Platforms,0.65,0.75,0.55,0.75
+Smart City Solution Developers,0.75,0.5,0.7,0.9
+Long-Term Care Facilities,0.2,0.75,0.95,0.35
+Neurotechnology Startups,0.9,0.35,0.45,0.95
+Maritime Shipping Companies,0.3,0.8,0.7,0.45
+B Corp Certified Businesses,0.6,0.65,0.8,0.75
+3D Printing Service Bureaus,0.65,0.5,0.6,0.8
+Private Military Contractors,0.45,0.3,0.85,0.55
+Exotic Materials Manufacturers,0.7,0.35,0.75,0.85
+Faith-Based Organizations,0.15,0.85,0.95,0.25
+Luxury Watch Brands,0.25,0.15,0.9,0.4
+Independent Bookshops,0.3,0.7,0.85,0.35
+Custom Software Development Firms,0.65,0.4,0.8,0.75
+Indoor Vertical Farms,0.7,0.6,0.5,0.8
+Energy Storage Startups,0.85,0.55,0.45,0.9
+Immersive Entertainment Venues,0.7,0.5,0.55,0.8
+Digital Nomad Service Providers,0.75,0.7,0.3,0.75
+Children's Education Technology,0.5,0.65,0.85,0.6
+Forensic Accounting Firms,0.25,0.45,0.9,0.4
+Agricultural Biotechnology Companies,0.8,0.4,0.6,0.9
+Niche Material Recycling Specialists,0.55,0.65,0.75,0.7
+Artisan Bakeries,0.35,0.5,0.9,0.45
+Talent Development Academies,0.55,0.6,0.8,0.7
+Medical Tourism Facilitators,0.6,0.75,0.5,0.6
+Deep Ocean Exploration Ventures,0.85,0.25,0.7,0.95
+Specialized Language Schools,0.4,0.65,0.85,0.5
+Carbon Trading Markets,0.7,0.45,0.6,0.8
+High-End Audio Equipment Makers,0.45,0.3,0.9,0.6

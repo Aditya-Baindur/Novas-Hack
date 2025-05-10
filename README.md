@@ -1,53 +1,67 @@
-# Next.js & HeroUI Template
+# Novas - Customer Purchase Predictor
 
-This is a template for creating applications using Next.js 14 (app directory) and HeroUI (v2).
+A Next.js application that predicts customer purchase decisions based on customer profile vectors and market events.
 
-[Try it on CodeSandbox](https://githubbox.com/heroui-inc/heroui/next-app-template)
+## Features
 
-## Technologies Used
+- Input customer profile data through 4 sliders:
+  - Brand Loyalty
+  - Risk Tolerance
+  - Innovation Adoption
+  - Price Sensitivity
+- Add market events that can affect purchase decisions
+- View purchase decision predictions (BOUGHT or NOT BOUGHT)
+- Explanation of reasoning behind decisions
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [HeroUI v2](https://heroui.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+## Getting Started
 
-## How to Use
+### Prerequisites
 
-### Use the template with create-next-app
+- Node.js 16.x or later
+- npm or yarn
 
-To create a new project based on this template using `create-next-app`, run the following command:
+### Installation
 
+1. Clone the repository:
 ```bash
-npx create-next-app -e https://github.com/heroui-inc/next-app-template
+git clone https://github.com/yourusername/novas.git
+cd novas
 ```
 
-### Install dependencies
-
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
-
+2. Install dependencies:
 ```bash
 npm install
+# or
+yarn
 ```
 
-### Run the development server
-
+3. Run the development server:
 ```bash
 npm run dev
+# or
+yarn dev
 ```
 
-### Setup pnpm (optional)
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+## Project Structure
 
-```bash
-public-hoist-pattern[]=*@heroui/*
-```
+- `app/` - Next.js application files
+  - `components/` - React components
+  - `lib/` - Utility functions and mock data
+  - `dashboard/` - Dashboard pages
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+## How It Works
 
-## License
+1. Set customer profile parameters using sliders
+2. Select market events that may impact customer behavior
+3. The system calculates the likelihood of purchase
+4. View the resulting decision with confidence level and reasoning
 
-Licensed under the [MIT license](https://github.com/heroui-inc/next-app-template/blob/main/LICENSE).
+## Future Enhancements
+
+- Historical data tracking
+- User accounts and saved profiles
+- Real-time data integration
+- Advanced analytics and reporting
+- ML model training on real customer data
