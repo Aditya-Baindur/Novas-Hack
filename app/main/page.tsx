@@ -65,6 +65,12 @@ export default function SessionGrid() {
 
   const handleCardClick = (id: number) => {
     setSelectedSession(id === selectedSession ? null : id);
+    
+    // If a session is selected, navigate to the session page
+    if (id !== selectedSession) {
+      // Navigate to the session details page
+      window.location.href = `/session/${id}`;
+    }
   };
 
   const addNewSession = async () => {
