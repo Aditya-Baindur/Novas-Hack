@@ -1,6 +1,6 @@
 "use client";
 
-import { ShoppingBag, ArrowRight } from "lucide-react";
+import { ShoppingBag, ArrowRight, ListIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function EnvironmentPage() {
@@ -31,6 +31,13 @@ export default function EnvironmentPage() {
             >
               <span>Run Simulation</span>
               <ArrowRight className="h-4 w-4" />
+            </button>
+            <button 
+              onClick={() => router.push("/session")}
+              className="flex items-center justify-center space-x-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-3 px-4 rounded-lg transition-colors duration-200 w-full"
+            >
+              <span>View All Sessions</span>
+              <ListIcon className="h-4 w-4" />
             </button>
           </div>
         </div>

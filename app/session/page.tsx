@@ -70,7 +70,7 @@ export default function Session() {
   };
 
   const navigateToChoicePage = (sessionId: number) => {
-    router.push(`/choice?sessionId=${sessionId}`);
+    router.push(`/${sessionId}/dashboard`);
   };
 
   const addNewSession = async () => {
@@ -200,7 +200,7 @@ export default function Session() {
                     }}
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                   >
-                    Go to Choices
+                    Go to Dashboard
                   </button>
                 </div>
               )}
