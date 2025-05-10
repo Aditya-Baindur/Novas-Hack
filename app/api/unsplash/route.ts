@@ -11,7 +11,7 @@ export async function GET(request: Request): Promise<Response> {
     const { searchParams } = new URL(request.url);
     const query: string = searchParams.get('query') || 'random';
     
-    const UNSPLASH_ACCESS_KEY: string | undefined = process.env.UNSPLASH_ACCESS_KEY; // set this in .env.local
+    const UNSPLASH_ACCESS_KEY: string | undefined = process.env.UNSPLASH_ACCESS_KEY; 
 
     const unsplashUrl: string = `https://api.unsplash.com/photos/random?query=${encodeURIComponent(query)}&client_id=${UNSPLASH_ACCESS_KEY}`;
 
