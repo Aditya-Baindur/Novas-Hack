@@ -12,7 +12,6 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "../components/ui/table";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../components/ui/dialog";
-import { VectorImpactChart } from "./components/vector-impact-chart";
 import { HistoricalDecisionsChart } from "./components/historical-decisions-chart";
 
 export default function Dashboard() {
@@ -60,13 +59,6 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6 p-6">
-      <div>
-        <h2 className="text-3xl font-bold tracking-tight">Customer Analysis Dashboard</h2>
-        <p className="text-muted-foreground mt-2">
-          Predict purchase decisions based on customer profiles and market events
-        </p>
-      </div>
-
       <Tabs defaultValue="simulator" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="simulator">Simulator</TabsTrigger>
@@ -75,8 +67,8 @@ export default function Dashboard() {
         </TabsList>
         
         <TabsContent value="simulator" className="mt-6">
-          <div className="grid gap-6 grid-cols-1 lg:grid-cols-4">
-            <Card className="col-span-4">
+          <div className="grid gap-6 grid-cols-1">
+            <Card className="col-span-1">
               <CardHeader>
                 <CardTitle>Customer Purchase Simulator</CardTitle>
                 <CardDescription>
@@ -133,13 +125,7 @@ export default function Dashboard() {
               </CardFooter>
             </Card>
 
-            {customerVector && (
-              <VectorImpactChart customerVector={customerVector} />
-            )}
-
-            <div className="lg:col-span-3">
-              <HistoricalDecisionsChart />
-            </div>
+            <HistoricalDecisionsChart />
           </div>
         </TabsContent>
         
