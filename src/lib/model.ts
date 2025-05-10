@@ -69,14 +69,17 @@ export function get_profiles(
 }
 
 export function run_simulation(environment: number[], profiles: number[][]) {
-  if (profiles[0].length !== 3) {
-    alert("Invalid profiles dimensions");
-    throw Error("Invalid profiles dimensions");
+  console.log(profiles);
+  if (!profiles || profiles.length == 0 || profiles[0].length !== 3) {
+    console.error("Invalid profiles dimensions", profiles);
+
+    return [0];
   }
 
-  if (environment.length !== 2) {
-    alert("Invalid environment dimensions");
-    throw Error("Invalid environment dimensions");
+  if (!environment || environment.length !== 2) {
+    console.error("Invalid environment dimensions", environment);
+
+    return [0];
   }
 
   const [original_price, price_change] = environment;

@@ -57,10 +57,10 @@ export default function SessionDashboard() {
   const [selectedEvents, setSelectedEvents] = useState<Event[]>([
     sampleEvents[0],
   ]);
-  const [decision, setDecision] = useState<Decision | null>();
+  const [decision, setDecision] = useState<Decision | null>(null);
   const [customerName, setCustomerName] = useState<string>("");
-  const [profiles, setProfiles] = useState<number[][]>([[0, 0, 0]]);
-  const [environment, setEnvironment] = useState<number[]>([100, 0]);
+  const [profiles, setProfiles] = useState<number[][] | null>(null);
+  const [environment, setEnvironment] = useState<number[] | null>(null);
 
   const clusters = generateSampleClusters();
 
@@ -72,12 +72,15 @@ export default function SessionDashboard() {
   }, [sessionId, router]);
 
   const handleVectorChange = (vector: CustomerVector) => {
+    if (!vector) return;
+
     setCustomerVector(vector);
 
     if (selectedEvents.length > 0) {
       const newProfiles = get_profiles(
         [vector.riskSeeking, vector.marketSucc, vector.income],
-        10
+        100,
+        0.3
       );
 
       setProfiles(newProfiles);
@@ -93,7 +96,10 @@ export default function SessionDashboard() {
         ) / decision_vec.length;
 
       console.log("newDecision", conf);
-      setDecision({ result: conf ? "Buy" : "Not buy", confidence: conf });
+      setDecision({
+        result: conf >= 0.5 ? "Buy" : "Not buy",
+        confidence: conf,
+      });
     }
   };
 
@@ -104,9 +110,19 @@ export default function SessionDashboard() {
     const environment = [events.originalPrice, events.priceChange];
 
     setEnvironment(environment);
-    const newDecision = run_simulation(environment, profiles);
 
-    setDecision(newDecision ? "Buy" : "Not buy");
+    if (!profiles) return;
+
+    const decision_vec = run_simulation(environment, profiles);
+    console.log("decision", decision_vec);
+    const conf =
+      decision_vec.reduce(
+        (accumulator, currentValue) => accumulator + currentValue,
+        0
+      ) / decision_vec.length;
+
+    console.log("newDecision", conf);
+    setDecision({ result: conf >= 0.5 ? "Buy" : "Not buy", confidence: conf });
   };
 
   const handleReset = () => {
