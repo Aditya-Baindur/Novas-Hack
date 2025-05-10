@@ -1,0 +1,65 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.box {
+  position: relative;
+  width: 400px;
+  height: 500px;
+  margin-bottom: 50px;
+  border-bottom: none;
+  background-color: #fff;
+}
+
+.wall {
+  position: absolute;
+  background-color: #333;
+}
+
+.rocket {
+  background: url(../public/r.png) no-repeat;
+  background-size: contain;
+  width: 140px;
+  height: 140px;
+  cursor: -webkit-grab;
+  will-change: transform;
+  user-select: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 10;
+}
+
+.rocket:active {
+  cursor: -webkit-grabbing;
+}
+
+.controls {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 100;
+}
+
+.controls button {
+  padding: 8px 16px;
+  border: none;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.controls button:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
