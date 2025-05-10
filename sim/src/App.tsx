@@ -1,11 +1,10 @@
 import * as React from 'react'
 import { useSpring, to, animated, config } from '@react-spring/web'
-
 import styles from './styles.module.css'
 
 // Box dimensions
-const BOX_WIDTH = 400;
-const BOX_HEIGHT = 500;
+const BOX_WIDTH = 500; // Box width
+const BOX_HEIGHT = 600; // Box height
 const WALL_THICKNESS = 20;
 const LINE_THICKNESS = WALL_THICKNESS;
 const LINE_HEIGHT = BOX_HEIGHT - 100;
@@ -13,58 +12,40 @@ const LINE_X_POSITION = BOX_WIDTH * 0.6;
 
 // Predefined paths for the rocket
 const predefinedPaths = {
+  rightExit: [
+    [BOX_WIDTH / 2, BOX_HEIGHT - 50], // Start
+    [BOX_WIDTH - 50, BOX_HEIGHT - 50], // Move right
+    [BOX_WIDTH - 50, BOX_HEIGHT / 2], // Move up
+    [BOX_WIDTH - 50, BOX_HEIGHT + 100] // Exit
+  ] as [number, number][],
+  
   leftExit: [
-    // Start at center bottom
-    [BOX_WIDTH / 2, BOX_HEIGHT - 50],
-    // Go up
-    [BOX_WIDTH / 2, BOX_HEIGHT / 2],
-    // Go to left side
-    [BOX_WIDTH / 4, BOX_HEIGHT / 2],
-    // Go down and exit
-    [BOX_WIDTH / 4, BOX_HEIGHT + 100]
+    [BOX_WIDTH / 2, BOX_HEIGHT - 50], // Start
+    [50, BOX_HEIGHT - 50], // Move left
+    [50, BOX_HEIGHT / 2], // Move up
+    [50, BOX_HEIGHT + 100] // Exit
   ] as [number, number][],
-
-  rightTurn: [
-    // Start at center bottom
-    [BOX_WIDTH / 2, BOX_HEIGHT - 50],
-    // Go up
-    [BOX_WIDTH / 2, BOX_HEIGHT / 2],
-    // Go to right (between wall and line)
-    [LINE_X_POSITION + (BOX_WIDTH - LINE_X_POSITION) / 2, BOX_HEIGHT / 2],
-    // Go more up
-    [LINE_X_POSITION + (BOX_WIDTH - LINE_X_POSITION) / 2, BOX_HEIGHT / 4],
-    // Turn back
-    [BOX_WIDTH / 2, BOX_HEIGHT / 3],
-    // Exit
-    [BOX_WIDTH / 2, BOX_HEIGHT + 100]
-  ] as [number, number][],
-
-  lineLeft: [
-    // Start at center bottom
-    [BOX_WIDTH / 2, BOX_HEIGHT - 50],
-    // Go up
-    [BOX_WIDTH / 2, BOX_HEIGHT / 2],
-    // Go to left of line
-    [LINE_X_POSITION - LINE_THICKNESS - 50, BOX_HEIGHT / 2],
-    // Go to top (inside box)
-    [LINE_X_POSITION - LINE_THICKNESS - 50, WALL_THICKNESS + 50],
-    // Turn back
-    [BOX_WIDTH / 3, BOX_HEIGHT / 3],
-    // Exit
-    [BOX_WIDTH / 3, BOX_HEIGHT + 100]
+  
+  middleExit: [
+    [BOX_WIDTH / 2, BOX_HEIGHT - 50], // Start
+    [BOX_WIDTH / 2, BOX_HEIGHT / 2 + 50], // Move up
+    [BOX_WIDTH / 2, BOX_HEIGHT / 2 + 50], // Move up
+    [BOX_WIDTH / 2, BOX_HEIGHT + 100] // Exit
   ] as [number, number][]
 }
 
 export default function App() {
-  const [currentPath, setCurrentPath] = React.useState('leftExit');
+  const [currentPath, setCurrentPath] = React.useState('rightExit');
   const [pathIndex, setPathIndex] = React.useState(0);
   const [{ pos }, api] = useSpring(() => ({ 
-    pos: predefinedPaths.leftExit[0] as [number, number] 
+    pos: predefinedPaths.rightExit[0] as [number, number] 
   }));
   const [{ angle }, angleApi] = useSpring(() => ({
     angle: 0,
     config: config.wobbly,
   }));
+
+  const [collectedSquares, setCollectedSquares] = React.useState<number[]>([]);
 
   React.useEffect(() => {
     const path = predefinedPaths[currentPath as keyof typeof predefinedPaths];
@@ -78,7 +59,6 @@ export default function App() {
   React.useEffect(() => {
     const path = predefinedPaths[currentPath as keyof typeof predefinedPaths];
     
-    // Don't proceed if we've reached the end of the path
     if (pathIndex >= path.length - 1) return;
     
     const timeout = setTimeout(() => {
@@ -100,8 +80,17 @@ export default function App() {
         config: { tension: 120, friction: 14 }
       });
       
+      // Check for square collection
+      if (nextPos[0] === 50 && nextPos[1] === BOX_HEIGHT / 2) {
+        setCollectedSquares(prev => [...prev, 1]); // Collect a square
+      }
+      
+      if (nextPos[0] === BOX_WIDTH - 50 && nextPos[1] === BOX_HEIGHT / 2) {
+        setCollectedSquares(prev => [...prev, 2]); // Collect another square
+      }
+      
       setPathIndex(nextIndex);
-    }, 1000);
+    }, 500); // Fast collection animation
     
     return () => clearTimeout(timeout);
   }, [pathIndex, currentPath]);
@@ -153,6 +142,11 @@ export default function App() {
           }} 
         />
         
+        {/* Red and Green Squares */}
+        <div className={styles.redSquare} style={{ left: BOX_WIDTH - 70, top: BOX_HEIGHT / 2 }} />
+        <div className={styles.redSquare} style={{ left: 30, top: BOX_HEIGHT / 2 }} />
+        <div className={styles.greenSquare} style={{ left: BOX_WIDTH / 2 - 10, top: 50 }} />
+        
         {/* Rocket */}
         <animated.div
           className={styles.rocket}
@@ -160,16 +154,25 @@ export default function App() {
             transform: to(
               [pos, angle],
               (posVal: [number, number], a: number) => 
-                `translate3d(${posVal[0] - 70}px,${posVal[1] - 70}px,0) rotate(${a}rad)`
+                `translate3d(${posVal[0] - 50}px,${posVal[1] - 50}px,0) rotate(${a}rad)`
             ),
           }}
-        />
+        >
+          {/* Display collected squares on the rocket */}
+          {collectedSquares.length > 0 && (
+            <div className={styles.collectedSquares}>
+              {collectedSquares.map((_, index) => (
+                <div key={index} className={styles.redSquare} />
+              ))}
+            </div>
+          )}
+        </animated.div>
       </div>
       
       <div className={styles.controls}>
+        <button onClick={() => setCurrentPath('rightExit')}>Right Exit</button>
+        <button onClick={() => setCurrentPath('middleExit')}>Middle Exit</button>
         <button onClick={() => setCurrentPath('leftExit')}>Left Exit</button>
-        <button onClick={() => setCurrentPath('rightTurn')}>Right Turn</button>
-        <button onClick={() => setCurrentPath('lineLeft')}>Line Left</button>
       </div>
     </div>
   );

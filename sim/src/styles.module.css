@@ -9,8 +9,8 @@
 
 .box {
   position: relative;
-  width: 400px;
-  height: 500px;
+  width: 500px; /* Increased box width */
+  height: 600px; /* Increased box height */
   margin-bottom: 50px;
   border-bottom: none;
   background-color: #fff;
@@ -24,19 +24,28 @@
 .rocket {
   background: url(../public/r.png) no-repeat;
   background-size: contain;
-  width: 140px;
-  height: 140px;
-  cursor: -webkit-grab;
+  width: 100px; /* Decreased rocket size */
+  height: 100px; /* Decreased rocket size */
   will-change: transform;
   user-select: none;
   position: absolute;
-  left: 50%;
-  top: 50%;
   z-index: 10;
 }
 
-.rocket:active {
-  cursor: -webkit-grabbing;
+.redSquare {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  z-index: 5;
+}
+
+.greenSquare {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: green;
+  z-index: 5;
 }
 
 .controls {
@@ -62,4 +71,29 @@
 
 .controls button:hover {
   background: rgba(0, 0, 0, 0.9);
+}
+
+.redSquare {
+  position: absolute;
+  width: 15px; /* Smaller size */
+  height: 15px; /* Smaller size */
+  background-color: red;
+  z-index: 5;
+}
+
+.greenSquare {
+  position: absolute;
+  width: 15px; /* Smaller size */
+  height: 15px; /* Smaller size */
+  background-color: green;
+  z-index: 5;
+}
+
+.collectedSquares {
+  position: absolute;
+  top: -10px; /* Adjust position to be on top of the rocket */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px; /* Space between collected squares */
 }
