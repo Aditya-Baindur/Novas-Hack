@@ -13,6 +13,7 @@ import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/table";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
+import { HistoricalDecisionsChart } from "@/app/components/dashboard/historical-decisions-chart";
 
 export default function SessionDashboard() {
   const router = useRouter();
@@ -77,23 +78,6 @@ export default function SessionDashboard() {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold">Dashboard for Session #{sessionId}</h1>
-          <div className="flex items-center space-x-2 mt-2 text-sm text-gray-500">
-            <button 
-              onClick={() => router.push("/")}
-              className="hover:underline hover:text-blue-600"
-            >
-              Home
-            </button>
-            <span>/</span>
-            <button 
-              onClick={handleBackToSessions}
-              className="hover:underline hover:text-blue-600"
-            >
-              Sessions
-            </button>
-            <span>/</span>
-            <span className="text-gray-800">Dashboard #{sessionId}</span>
-          </div>
         </div>
         <Button 
           variant="outline" 
@@ -168,6 +152,8 @@ export default function SessionDashboard() {
                 <Button variant="outline">Export PDF</Button>
               </CardFooter>
             </Card>
+            
+            <HistoricalDecisionsChart />
           </div>
         </TabsContent>
         

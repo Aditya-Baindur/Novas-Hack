@@ -110,23 +110,23 @@ export function HistoricalDecisionsChart() {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
                 dataKey="date"
-                tickFormatter={(date) => {
+                tickFormatter={(date: string) => {
                   const d = new Date(date);
                   return `${d.getMonth() + 1}/${d.getDate()}`;
                 }}
               />
               <YAxis />
               <Tooltip
-                formatter={(value, name) => {
+                formatter={(value: number, name: string) => {
                   return [value, name === "bought" ? "Purchased" : "Not Purchased"];
                 }}
-                labelFormatter={(date) => {
+                labelFormatter={(date: string) => {
                   const d = new Date(date);
                   return d.toLocaleDateString();
                 }}
               />
               <Legend
-                formatter={(value) => {
+                formatter={(value: string) => {
                   return value === "bought" ? "Purchased" : "Not Purchased";
                 }}
               />

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter, useParams } from "next/navigation";
 import { 
   LayoutDashboardIcon, 
   HistoryIcon,
@@ -8,7 +9,8 @@ import {
   PieChartIcon,
   CheckCircleIcon,
   XCircleIcon,
-  HomeIcon
+  HomeIcon,
+  XIcon
 } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { Button } from "@/app/components/ui/button";
@@ -84,38 +86,73 @@ const pastSimulations = [
   },
 ];
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
+  onCloseSidebar?: () => void;
+  sessionId?: string;
+}
 
-export function Sidebar({ className }: SidebarProps) {
+export function Sidebar({ className, onCloseSidebar, sessionId: propSessionId }: SidebarProps) {
+  const router = useRouter();
+  const params = useParams();
+  const sessionId = propSessionId || (params?.sessionId as string);
   const [activeSimulation, setActiveSimulation] = useState<string | null>(null);
 
   return (
-    <aside className={cn("flex flex-col bg-muted/40", className)}>
-      <div className="px-3 py-4">
-        <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
+    <aside className={cn("flex flex-col bg-background/95 backdrop-blur-sm h-screen w-64 border-r", className)}>
+      <div className="p-4 border-b flex items-center justify-between">
+        <h2 className="text-lg font-semibold tracking-tight">
           Customer Analyzer
         </h2>
+        {onCloseSidebar && (
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={onCloseSidebar}
+            className="lg:hidden"
+          >
+            <XIcon className="h-4 w-4" />
+          </Button>
+        )}
+      </div>
+      <div className="px-4 pt-4">
         <div className="space-y-1">
-          <Button variant="secondary" className="w-full justify-start">
+          <Button 
+            variant="secondary" 
+            className="w-full justify-start"
+            onClick={() => sessionId ? router.push(`/${sessionId}/dashboard`) : router.push('/dashboard')}
+          >
             <LayoutDashboardIcon className="mr-2 h-4 w-4" />
             Dashboard
           </Button>
-          <Button variant="ghost" className="w-full justify-start">
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start"
+            onClick={() => router.push('/session')}
+          >
             <PieChartIcon className="mr-2 h-4 w-4" />
-            Analytics
+            Sessions
           </Button>
-          <Button variant="ghost" className="w-full justify-start">
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start"
+            onClick={() => router.push('/customers')}
+          >
             <UsersIcon className="mr-2 h-4 w-4" />
             Customers
           </Button>
-          <Button variant="ghost" className="w-full justify-start">
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start"
+            onClick={() => router.push('/history')}
+          >
             <HistoryIcon className="mr-2 h-4 w-4" />
             History
           </Button>
         </div>
       </div>
-      <div className="px-3 py-2">
-        <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
+      
+      <div className="px-4 py-2 flex-1 overflow-auto">
+        <h2 className="mb-2 text-sm font-semibold tracking-tight text-muted-foreground">
           Past Simulations
         </h2>
         <div className="space-y-1">
@@ -123,19 +160,24 @@ export function Sidebar({ className }: SidebarProps) {
             <Button
               key={simulation.id}
               variant={activeSimulation === simulation.id ? "secondary" : "ghost"}
-              className="w-full justify-start"
-              onClick={() => setActiveSimulation(simulation.id)}
+              className="w-full justify-start h-auto py-1.5"
+              onClick={() => {
+                setActiveSimulation(simulation.id);
+                if (sessionId) {
+                  router.push(`/${sessionId}/simulation/${simulation.id}`);
+                }
+              }}
             >
               <div className="flex w-full items-center justify-between">
                 <div className="flex items-center">
                   {simulation.decision === "BOUGHT" ? (
-                    <CheckCircleIcon className="mr-2 h-4 w-4 text-green-500" />
+                    <CheckCircleIcon className="mr-2 h-3 w-3 text-green-500 flex-shrink-0" />
                   ) : (
-                    <XCircleIcon className="mr-2 h-4 w-4 text-red-500" />
+                    <XCircleIcon className="mr-2 h-3 w-3 text-red-500 flex-shrink-0" />
                   )}
-                  <span className="truncate">{simulation.customerName}</span>
+                  <span className="truncate text-sm">{simulation.customerName}</span>
                 </div>
-                <Badge variant="outline" className="ml-2">
+                <Badge variant="outline" className="ml-2 text-xs py-0 h-4 px-1.5">
                   {Math.round(simulation.confidence * 100)}%
                 </Badge>
               </div>
@@ -143,16 +185,22 @@ export function Sidebar({ className }: SidebarProps) {
           ))}
         </div>
       </div>
-      <div className="mt-auto px-3 py-4">
-        <div className="flex items-center justify-between px-4">
+      
+      <div className="border-t p-4">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Avatar className="h-6 w-6">
+            <Avatar className="h-7 w-7">
               <AvatarImage src="https://github.com/shadcn.png" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <span className="text-sm">Analyst</span>
+            <span className="text-sm font-medium">Analyst</span>
           </div>
-          <Button variant="ghost" size="icon" className="h-6 w-6">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="h-7 w-7"
+            onClick={() => router.push('/')}
+          >
             <HomeIcon className="h-4 w-4" />
           </Button>
         </div>
